@@ -1,26 +1,32 @@
 from dataclasses import dataclass
+from datetime import datetime
 
-items = []
+
+todos = []
 
 
 @dataclass
-class Item:
-    text: str
+class Todo:
+    title: str
+    created_at: datetime
     isCompleted: bool = False
 
 
-def add(text):
-    text = text.replace('b', 'bbb').replace('B', 'Bbb')
-    items.append(Item(text))
+
+def add(title, created_at):
+    title = title.replace('b', 'bbb').replace('B', 'Bbb')
+    if isinstance(created_at, str):
+        created_at = datetime.strptime(created_at, "%Y-%m-%d")
+    todos.append(Todo(title, created_at))
 
 
 def get_all():
-    return items
+    return todos
 
 
 def get(index):
-    return items[index]
+    return todos[index]
 
 
 def update(index):
-    items[index].isCompleted = not items[index].isCompleted
+    todos[index].isCompleted = not todos[index].isCompleted
